@@ -32,6 +32,23 @@ describe('POST /register', function() {
   })
 
   describe('user register failed', () => {
+    test('register failed because email is already exist', function(done) {
+      request(app)
+        .post('/users/register')
+        .send(registerInput)
+        .set('Accept', 'application/json')
+        // .expect('Content-Type', /json/)
+        .then(response => {
+          const { status, body } = response
+          expect(status).toBe(400)
+          expect(body).toHaveProperty('msg', ['email must be unique'])
+          done()
+        })
+        .catch(done)
+    })
+  })
+
+  describe('user register failed', () => {
     test('register failed because email is empty', function(done) {
       request(app)
         .post('/users/register')
@@ -41,7 +58,7 @@ describe('POST /register', function() {
         .then(response => {
           const { status, body } = response
           expect(status).toBe(400)
-          expect(body).toHaveProperty(errors, ['Email cannot be empty'])
+          expect(body).toHaveProperty('msg', ['Invalid email format', 'Email cannot be empty'])
           done()
         })
         .catch(done)

@@ -7,7 +7,7 @@ class UserCtrl {
   static async register(req, res, next) {
     try {
       let {email, password} = req.body
-      const data = await User.create({
+      await User.create({
         email,
         password
       })
@@ -37,7 +37,7 @@ class UserCtrl {
       let token = generateToken(payload)
       res.status(200).json({ token })
     } catch(err) {
-      console.log(err, '>>>>>>>>login user');
+      // console.log(err, '>>>>>>>>login user');
       next(err)
     }
   }}
