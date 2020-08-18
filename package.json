@@ -1,0 +1,31 @@
+{
+  "name": "ecommerce-server",
+  "version": "1.0.0",
+  "description": "Pada challenge kali ini, kamu diwajibkan menggunakan metode Test Driven Development (TDD) untuk membuat backend.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcbon/Ecommerce-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcbon/Ecommerce-Server/issues"
+  },
+  "homepage": "https://github.com/dcbon/Ecommerce-Server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.3.0",
+    "sequelize": "^6.3.4",
+    "supertest": "^4.0.2"
+  }
+}
