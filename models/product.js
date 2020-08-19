@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please insert numeric price'
         },
         min: {
-          args: 0,
+          args: [0],
           msg: 'Price cannot be less than 0'
         },
         notEmpty: {
@@ -56,8 +56,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please insert numeric stock'
         },
         min: {
-          args: 1,
-          msg: 'Cannot insert 0 stock'
+          args: [0],
+          msg: 'Stock cannot be less than 0'
         },
         notEmpty: {
           args: true,
@@ -70,6 +70,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+    hooks: {
+      beforeCreate: (product, opt) => {
+        if (!product.image_url) product.image_url = 'https://faculty.iiit.ac.in/~indranil.chakrabarty/images/empty.png'
+      }
+    },
     modelName: 'Product',
   });
   return Product;

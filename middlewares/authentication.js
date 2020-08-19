@@ -17,7 +17,7 @@ async function authentication(req, res, next) {
     } 
   }
   catch(err) {
-    console.log(err, '>>>>>>>> authen');
+    // console.log(err, '>>>>>>>> authen');
     next(err)
   }
 } 

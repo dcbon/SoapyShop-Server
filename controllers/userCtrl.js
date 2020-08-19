@@ -13,7 +13,7 @@ class UserCtrl {
       })
       res.status(201).json({msg: `user ${email} registered successfully`})
     } catch(err) {
-      console.log(err, '>>>>>>>>register user');
+      // console.log(err, '>>>>>>>>register user');
       next(err)
     }
   }
@@ -27,15 +27,15 @@ class UserCtrl {
         }
       })
 
-      if (!user) throw { msg: 'Invalid email or password'}
+      if (!user) throw { msg: 'Invalid email or password', status: 404}
       let comparedPass = comparePass(password, user.password)
       if (!comparedPass) throw { msg: 'Invalid email or password', status: 401}
       let payload = {
         id: user.id,
-        email: user.email,
+        email: user.email
       }
       let token = generateToken(payload)
-      res.status(200).json({ token })
+      res.status(200).json({ access_token: token })
     } catch(err) {
       // console.log(err, '>>>>>>>>login user');
       next(err)

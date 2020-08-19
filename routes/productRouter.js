@@ -9,7 +9,7 @@ router.use(authentication)
 router.get('/', productCtrl.read)
 
 
-router.post('/', authorization, productCtrl.create)
+router.post('/', productCtrl.create)
 router.put('/:id', authorization, productCtrl.update)
 router.delete('/:id', authorization, productCtrl.delete)
 

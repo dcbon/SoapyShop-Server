@@ -12,6 +12,7 @@ class ProductCtrl {
       })
       res.status(201).json({ product: data })
     } catch(err) {
+      console.log(err, '>>>>>>>>> error add product');
       next(err)
     }
   }
