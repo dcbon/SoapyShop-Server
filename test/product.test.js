@@ -4,7 +4,8 @@ const { generateToken } = require('../helpers/jwt')
 
 const user = {
   id: 2,
-  email: 'john@mail.com'
+  email: 'admin@mail.com',
+  role: 'admin'
 }
 
 const token = generateToken(user)

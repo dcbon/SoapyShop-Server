@@ -32,7 +32,8 @@ class UserCtrl {
       if (!comparedPass) throw { msg: 'Invalid email or password', status: 401}
       let payload = {
         id: user.id,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
       let token = generateToken(payload)
       res.status(200).json({ access_token: token })
