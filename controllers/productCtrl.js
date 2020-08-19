@@ -12,20 +12,17 @@ class ProductCtrl {
       })
       res.status(201).json({ product: data })
     } catch(err) {
-      console.log(err, '>>>>>>>>> error add product');
+      // console.log(err, '>>>>>>>>> error add product');
       next(err)
     }
   }
 
   static async read(req,res, next) {
     try {
-      const data = await Product.findAll({
-        include: {
-          model: User
-        }
-      })
+      const data = await Product.findAll()
       res.status(200).json({ products: data })
     } catch(err) {
+      console.log(err, '>>>>>>>>> error read product');
       next(err)
     }
   }
@@ -43,13 +40,14 @@ class ProductCtrl {
       })
       res.status(200).json({ product: data })
     } catch(err) {
+      // console.log(err, '>>>>>>>>> error update product');
       next(err)
     }
   }
   
   static async delete(req,res, next) {
     try {
-      const data = await Product.destroy({
+      await Product.destroy({
         where: { id: req.params.id }
       })
       res.status(200).json({ msg: 'Product deleted' })
