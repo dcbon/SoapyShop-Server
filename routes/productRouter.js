@@ -6,12 +6,11 @@ const authorization = require('../middlewares/authorization')
 
 
 router.use(authentication)
+router.use(authorization)
 router.get('/', productCtrl.read)
-
-
-router.post('/', authorization, productCtrl.create)
-router.put('/:id', authorization, productCtrl.update)
-router.delete('/:id', authorization, productCtrl.delete)
+router.post('/', productCtrl.create)
+router.put('/:id', productCtrl.update)
+router.delete('/:id', productCtrl.delete)
 
 
 module.exports = router
