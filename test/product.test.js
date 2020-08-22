@@ -3,88 +3,115 @@ const app = require('../app')
 const { generateToken } = require('../helpers/jwt')
 
 const user = {
-  id: 1,
+  id: 16,
   email: 'admin@mail.com',
   role: 'admin'
 }
 
 const token = generateToken(user)
 
-const addProduct = {
+const Product = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addNameEmpty = {
+const NameEmpty = {
   "name": "",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addNameNull = {
+const NameNull = {
   "name": null,
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addPriceNotNum = {
+const PriceNotNum = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": '500000o',
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addPriceMin = {
+const PriceMin = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": -500000,
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addPriceEmpty = {
+const PriceEmpty = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": "",
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addPriceNull = {
+const PriceNull = {
   "name":  "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": null,
-  "stock": 50
+  "stock": 50,
+  "CategoryId": 1
 }
 
-const addStockNotNum = {
+const StockNotNum = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": '50o'
+  "stock": '50o',
+  "CategoryId": 1
 }
 
-const addStockMin = {
+const StockMin = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": -1
+  "stock": -1,
+  "CategoryId": 1
 }
 
-const addStockEmpty = {
+const StockEmpty = {
   "name": "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": ""
+  "stock": "",
+  "CategoryId": 1
 }
 
-const addStockNull = {
+const StockNull = {
   "name":  "Glasses",
   "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
   "price": 500000,
-  "stock": null
+  "stock": null,
+  "CategoryId": 1
+}
+
+const CategoryEmpty = {
+  "name": "Glasses",
+  "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
+  "price": 500000,
+  "stock": 50,
+  "CategoryId": ""
+}
+
+const CategoryNull = {
+  "name": "Glasses",
+  "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
+  "price": 500000,
+  "stock": 50,
+  "CategoryId": null
 }
 
 describe('POST /products', function() {
@@ -93,7 +120,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addProduct)
+        .send(Product)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -101,10 +128,11 @@ describe('POST /products', function() {
           expect(status).toBe(201)
           expect(body).toHaveProperty('product')
           expect(body.product).toHaveProperty('id')
-          expect(body.product).toHaveProperty('name', addProduct.name)
-          expect(body.product).toHaveProperty('image_url', addProduct.image_url)
-          expect(body.product).toHaveProperty('price', addProduct.price)
-          expect(body.product).toHaveProperty('stock', addProduct.stock)
+          expect(body.product).toHaveProperty('name', Product.name)
+          expect(body.product).toHaveProperty('image_url', Product.image_url)
+          expect(body.product).toHaveProperty('price', Product.price)
+          expect(body.product).toHaveProperty('stock', Product.stock)
+          expect(body.product).toHaveProperty('CategoryId')
           done()
         })
         .catch(done)
@@ -115,7 +143,7 @@ describe('POST /products', function() {
     test('add product failed because there is no token', function(done) {
       request(app)
         .post('/products')
-        .send(addProduct)
+        .send(Product)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -133,7 +161,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addNameEmpty)
+        .send(NameEmpty)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -151,7 +179,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addNameNull)
+        .send(NameNull)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -169,7 +197,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addPriceNotNum)
+        .send(PriceNotNum)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -187,7 +215,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addPriceMin)
+        .send(PriceMin)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -205,7 +233,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addPriceEmpty)
+        .send(PriceEmpty)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -223,7 +251,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addPriceNull)
+        .send(PriceNull)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -241,7 +269,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addStockNotNum)
+        .send(StockNotNum)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -259,7 +287,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addStockMin)
+        .send(StockMin)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -277,7 +305,7 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addStockEmpty)
+        .send(StockEmpty)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
@@ -295,13 +323,49 @@ describe('POST /products', function() {
       request(app)
         .post('/products')
         .set('access_token', token)
-        .send(addStockNull)
+        .send(StockNull)
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .then(response => {
           const { status, body } = response
           expect(status).toBe(400)
           expect(body).toHaveProperty('msg', ['Stock is required'])
+          done()
+        })
+        .catch(done)
+    })
+  })
+
+  describe('product failed created', () => {
+    test('add product failed because product category is empty', function(done) {
+      request(app)
+        .post('/products')
+        .set('access_token', token)
+        .send(CategoryEmpty)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .then(response => {
+          const { status, body } = response
+          expect(status).toBe(400)
+          expect(body).toHaveProperty('msg', ['Category cannot be empty'])
+          done()
+        })
+        .catch(done)
+    })
+  })
+
+  describe('product failed created', () => {
+    test('add product failed because product category is null', function(done) {
+      request(app)
+        .post('/products')
+        .set('access_token', token)
+        .send(CategoryNull)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .then(response => {
+          const { status, body } = response
+          expect(status).toBe(400)
+          expect(body).toHaveProperty('msg', ['Category is required'])
           done()
         })
         .catch(done)
@@ -352,7 +416,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addProduct)
+        .send(Product)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -369,7 +433,7 @@ describe('PUT /products', function() {
     test('update product failed because there is no token', function(done) {
       request(app)
         .put('/products/1')
-        .send(addProduct)
+        .send(Product)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -387,7 +451,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addNameEmpty)
+        .send(NameEmpty)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -405,7 +469,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addNameNull)
+        .send(NameNull)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -423,7 +487,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addPriceNotNum)
+        .send(PriceNotNum)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -441,7 +505,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addPriceMin)
+        .send(PriceMin)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -459,7 +523,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addPriceEmpty)
+        .send(PriceEmpty)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -477,7 +541,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addPriceNull)
+        .send(PriceNull)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -495,7 +559,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addStockNotNum)
+        .send(StockNotNum)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -513,7 +577,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addStockMin)
+        .send(StockMin)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -531,7 +595,7 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addStockEmpty)
+        .send(StockEmpty)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
@@ -549,13 +613,49 @@ describe('PUT /products', function() {
       request(app)
         .put('/products/1')
         .set('access_token', token)
-        .send(addStockNull)
+        .send(StockNull)
         .set('Accept', 'application/json')
         // .expect('Content-Type', /json/)
         .then(response => {
           const { status, body } = response
           expect(status).toBe(400)
           expect(body).toHaveProperty('msg', ['Stock is required'])
+          done()
+        })
+        .catch(done)
+    })
+  })
+
+  describe('product update failed', () => {
+    test('update product failed because product Category is empty', function(done) {
+      request(app)
+        .put('/products/1')
+        .set('access_token', token)
+        .send(CategoryEmpty)
+        .set('Accept', 'application/json')
+        // .expect('Content-Type', /json/)
+        .then(response => {
+          const { status, body } = response
+          expect(status).toBe(400)
+          expect(body).toHaveProperty('msg', ['Category cannot be empty'])
+          done()
+        })
+        .catch(done)
+    })
+  })
+
+  describe('product update failed', () => {
+    test('update product failed because product Category is null', function(done) {
+      request(app)
+        .put('/products/1')
+        .set('access_token', token)
+        .send(CategoryNull)
+        .set('Accept', 'application/json')
+        // .expect('Content-Type', /json/)
+        .then(response => {
+          const { status, body } = response
+          expect(status).toBe(400)
+          expect(body).toHaveProperty('msg', ['Category is required'])
           done()
         })
         .catch(done)

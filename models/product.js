@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Product.belongsTo(models.Category)
     }
   };
   Product.init({
@@ -67,7 +68,19 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Stock is required'
         }
       }
-    }
+    },
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Category cannot be empty'
+        },
+        notNull: {
+          msg: 'Category is required'
+        }
+      }},
   }, {
     sequelize,
     hooks: {

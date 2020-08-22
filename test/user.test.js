@@ -1,5 +1,23 @@
 const request = require('supertest')
 const app = require('../app')
+// const { sequelize } = require('../models')
+// const { queryInterface } = sequelize
+
+
+// beforeAll(done => {
+//   queryInterface
+//     .bulkDelete('Users', {})
+//     .then(() => done())
+//     .catch(err => done(err))
+// })
+
+// afterAll(done => {
+//   queryInterface
+//     .bulkDelete('Users', {})
+//     .then(() => done())
+//     .catch(err => done(err))
+// })
+
 
 const registerInput = {
   email: 'john@mail.com',
