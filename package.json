@@ -4,7 +4,8 @@
   "description": "Pada challenge kali ini, kamu diwajibkan menggunakan metode Test Driven Development (TDD) untuk membuat backend.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
