@@ -41,6 +41,21 @@ class UserCtrl {
       // console.log(err, '>>>>>>>>login user');
       next(err)
     }
-  }}
+  }
+
+  static async read(req,res, next) {
+    try {
+      const data = await User.findAll({
+        where: {
+          role: 'customer'
+        }
+      })
+      res.status(200).json({ users: data })
+    } catch(err) {
+      console.log(err, '>>>>>>>>> error read user');
+      next(err)
+    }
+  }
+}
 
 module.exports = UserCtrl
