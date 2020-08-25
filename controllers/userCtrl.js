@@ -6,8 +6,9 @@ const { generateToken } = require('../helpers/jwt')
 class UserCtrl {
   static async register(req, res, next) {
     try {
-      let {email, password} = req.body
+      let {name, email, password} = req.body
       await User.create({
+        name,
         email,
         password
       })
@@ -53,6 +54,17 @@ class UserCtrl {
       res.status(200).json({ users: data })
     } catch(err) {
       console.log(err, '>>>>>>>>> error read user');
+      next(err)
+    }
+  }
+  
+  static async delete(req,res, next) {
+    try {
+      await Product.destroy({
+        where: { id: req.params.id }
+      })
+      res.status(200).json({ msg: 'User deleted' })
+    } catch(err) {
       next(err)
     }
   }
