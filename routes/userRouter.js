@@ -11,7 +11,7 @@ router.post('/login', userCtrl.login)
 router.use(authentication)
 router.use(authorization)
 router.get('/', userCtrl.read)
-router.post('/:id', userCtrl.delete)
+router.delete('/:id', userCtrl.delete)
 
 
 module.exports = router
