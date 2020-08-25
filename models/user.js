@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
+    name: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -57,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate: (user, opt) => {
         user.password = hashPass(user.password)
         if (!user.role) user.role = 'customer'
+        if (!user.name) user.name = 'No Name'
       }
     },
     modelName: 'User',
