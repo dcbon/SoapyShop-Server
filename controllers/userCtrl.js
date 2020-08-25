@@ -28,7 +28,7 @@ class UserCtrl {
         }
       })
 
-      if (!user) throw { msg: 'Invalid email or password', status: 404}
+      if (!user) throw { msg: 'Email is not registered', status: 404}
       let comparedPass = comparePass(password, user.password)
       if (!comparedPass) throw { msg: 'Invalid email or password', status: 401}
       let payload = {
@@ -60,7 +60,7 @@ class UserCtrl {
   
   static async delete(req,res, next) {
     try {
-      await Product.destroy({
+      await User.destroy({
         where: { id: req.params.id }
       })
       res.status(200).json({ msg: 'User deleted' })
