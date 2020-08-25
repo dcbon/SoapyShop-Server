@@ -6,8 +6,8 @@ const authorization = require('../middlewares/authorization')
 
 
 router.use(authentication)
-router.use(authorization)
 router.get('/', categoryCtrl.read)
+router.use(authorization)
 router.post('/', categoryCtrl.create)
 router.put('/:id', categoryCtrl.update)
 router.delete('/:id', categoryCtrl.delete)

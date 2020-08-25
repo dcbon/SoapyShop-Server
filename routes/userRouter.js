@@ -9,8 +9,9 @@ const authorization = require('../middlewares/authorization')
 router.post('/register', userCtrl.register)
 router.post('/login', userCtrl.login)
 router.use(authentication)
+router.use(authorization)
 router.get('/', userCtrl.read)
-router.post('/:id', authorization, userCtrl.delete)
+router.post('/:id', userCtrl.delete)
 
 
 module.exports = router
