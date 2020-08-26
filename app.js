@@ -13,11 +13,4 @@ app.use(express.json())
 app.use(routes)
 app.use(errHandler)
 
-if (process.env.NODE_ENV != 'test') {
-  const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`)
-  })
-}
-
-
 module.exports = app

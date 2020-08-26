@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     image_url: DataTypes.STRING(1234),
+    rating: DataTypes.INTEGER,
+    description: DataTypes.STRING(1234),
     price: {
       type: DataTypes.DOUBLE,
       allowNull: false,
@@ -80,7 +82,8 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           msg: 'Category is required'
         }
-      }},
+      }
+    }
   }, {
     sequelize,
     hooks: {
