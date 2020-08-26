@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         through: 'CartItem', 
         foreignKey: 'CartId' 
       });
+      Cart.belongsToMany(models.User, {
+        through: 'Transaction', 
+        foreignKey: 'CartId' 
+      });
     }
   };
   Cart.init({
@@ -26,6 +30,15 @@ module.exports = (sequelize, DataTypes) => {
     total: DataTypes.INTEGER
   }, {
     sequelize,
+    hooks: {
+      beforeCreate: (cart, opt) => {
+        cart.status = 1
+        cart.subtotal = 0
+        cart.promo = ''
+        cart.discount = 0
+        cart.total = 0
+      }
+    },
     modelName: 'Cart',
   });
   return Cart;
