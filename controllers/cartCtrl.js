@@ -3,8 +3,8 @@ const { Cart, Product, Transaction } = require('../models')
 class CartCtrl {
   static async create(req,res, next) {
     try {
-      let UserId = req.userData.id
-      let { ProductId, quantity, status } = req.body
+      // let UserId = req.userData.id
+      let { UserId, ProductId, quantity, status } = req.body
       const data = await Cart.findAll()
       let cart = null
       await data.forEach(e => {
@@ -48,7 +48,6 @@ class CartCtrl {
   static async read(req,res, next) {
     try {
       const data = await Cart.findAll({
-        // { include: [{ model: Model1, as: 'Alias' }]}
         include: [{ 
           model: Product
         }],

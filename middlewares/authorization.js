@@ -14,10 +14,12 @@ async function authorizationAdm(req, res, next) {
 async function authUser(req, res, next) {
   try {
     let id = req.params.user
+    console.log(id, req.userData.id);
     if (req.userData.id == id) next()
     else throw { msg: 'Unauthorized Access', status: 401 }
   }
   catch(err) {
+    console.log(id, req.userData.id), '===ids';
     console.log(err, '>>>>>>>> author user');
     next(err)
   }
