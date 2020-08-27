@@ -5,13 +5,12 @@ const authentication = require('../middlewares/authentication')
 const {authorizationCart, authUser} = require('../middlewares/authorization')
 
 
-// router.use(authentication)
-// router.use(authUser)
+router.use(authentication)
 
 router.post('/', cartCtrl.create)
-router.get('/', cartCtrl.read)
+router.get('/', authUser, cartCtrl.read)
 
-router.post('/:user/transaction', cartCtrl.checkOut)
+// router.post('/:user/transaction', cartCtrl.checkOut)
 
 router.use(authorizationCart)
 router.put('/:id', cartCtrl.update)

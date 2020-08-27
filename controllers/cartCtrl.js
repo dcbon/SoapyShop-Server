@@ -1,19 +1,26 @@
-const { Cart, Product, Transaction } = require('../models')
+const { Cart, Product } = require('../models')
 
 class CartCtrl {
   static async create(req,res, next) {
     try {
-      // let UserId = req.userData.id
       let { UserId, ProductId, quantity, status } = req.body
-      const data = await Cart.findAll()
-      console.log(data, '===data awal cart');
-      let cart = null
-      await data.forEach(e => {
-        if (e.ProductId === ProductId) e.quantity++
-        else cart = Cart.create(UserId, ProductId, quantity, status)
+      let product = await Product.findByPk(ProductId)
+      let subtotal = quantity * product.price
+      console.log(subtotal, '===subtotal');
+      const [data, created] = await Cart.findOrCreate({
+        where: { ProductId },
+        defaults: { UserId, ProductId, quantity, status, subtotal }
       });
-      console.log(cart, '===cart');
-      res.status(201).json({ cart: cart })
+      let newData = null
+      if (!created) {
+        newData = await Cart.update({ quantity: quantity, subtotal: subtotal }, {
+          where: {
+            ProductId, UserId
+          }, 
+          returning: true
+        })
+      }
+      res.status(201).json({ cart: newData })
     } catch(err) {
       console.log(err, '>>>>>>>>> error add cart');
       next(err)
@@ -22,26 +29,20 @@ class CartCtrl {
 
   static async checkOut (req, res, next) {
     try {
-      // let UserId = req.userData.id
-      let { UserId, ProductId, quantity, status } = req.body
-      const data = await Product.findByPk(ProductId)
-      let updQty = data.quantity - quantity
-      let updStat = true
-      const updCart = Cart.update({
-        UserId, ProductId, updQty, updStat
-      }, {
-        where: { id: req.params.id }, 
-        returning: true
+      let UserId = req.userData.id
+      // let { UserId, ProductId, quantity, status } = req.body
+      const data = await Cart.findAll({
+        where: { UserId }
       })
-      // const trans = await Transaction.create({
-      //   CartId: req.params.id,
-      //   UserId,
-      //   updStat
-      // })
-      res.status(200).json({ cart: updCart, trans: trans })
+      data.forEach(e => {
+        let newStock = data.Product.stock - data.quantity
+        Product.update({ stock: newStock }, { where: { id: e.ProductId }})
+        Cart.update({status: true}, {where: {status: false}})
+      });
+      res.status(200).json({ cart: data })
     }
     catch(err) {
-      console.log(err, '===create trans upd cart');
+      console.log(err, '===create checkout cart');
       next(err)
     }
   }
@@ -53,7 +54,7 @@ class CartCtrl {
           model: Product
         }],
         where: {
-          UserId: req.params.user,
+          UserId: req.userData.id,
           status: false
         }
       })
@@ -67,11 +68,14 @@ class CartCtrl {
   static async update(req,res, next) {
     try {
       let UserId = req.userData.id
-      let { ProductId, quantity, status } = req.body
+      let { UserId, ProductId, quantity } = req.body
       const data = await Cart.update({
-        UserId, ProductId, quantity, status
+        quantity
       }, {
-        where: { id: req.params.id }, 
+        where: { 
+          UserId,
+          ProductId 
+        }, 
         returning: true
       })
       res.status(200).json({ cart: data })

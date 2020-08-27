@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
+    subtotal: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Cart',

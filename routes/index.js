@@ -9,7 +9,7 @@ router.get('/', (req,res) => res.status(200).json({msg: 'connected'}))
 router.use('/products', productRouter)
 router.use('/users', userRouter)
 router.use('/categories', categoryRouter)
-router.use('/:user/cart', cartRouter)
+router.use('/cart', cartRouter)
 
 
 module.exports = router
