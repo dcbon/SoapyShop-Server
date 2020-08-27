@@ -6,7 +6,7 @@ const {authorizationCart, authUser} = require('../middlewares/authorization')
 
 
 router.use(authentication)
-router.use(authUser)
+// router.use(authUser)
 
 router.post('/', cartCtrl.create)
 router.get('/', cartCtrl.read)
