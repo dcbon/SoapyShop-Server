@@ -71,18 +71,6 @@ class UserCtrl {
 
 
   // transaction
-  static async createTrans(req,res, next) {
-    try {
-      let { UserId, CartId, status } = req.body
-      const data = await Transaction.create({
-        UserId, CartId, status
-      })
-      res.status(201).json({ transaction: data })
-    } catch(err) {
-      console.log(err, '>>>>>>>>> error add transaction');
-      next(err)
-    }
-  }
 
   static async readTrans(req,res, next) {
     try {

@@ -1,23 +1,46 @@
-const { Cart, Product } = require('../models')
+const { Cart, Product, Transaction } = require('../models')
 
 class CartCtrl {
   static async create(req,res, next) {
     try {
       let UserId = req.userData.id
       let { ProductId, quantity, status } = req.body
-      const data = await Cart.findOrCreate({
-        where: {
-          ProductId, 
-          status: false
-        },
-        defaults: {
-          UserId, ProductId, quantity, status
-        }
-      })
-      console.log(data, '===cart');
-      res.status(201).json({ cart: data })
+      const data = await Cart.findAll()
+      let cart = null
+      data.forEach(e => {
+        if (e.ProductId === ProductId) e.quantity++
+        else cart = await Cart.create(UserId, ProductId, quantity, status)
+      });
+      console.log(cart, '===cart');
+      res.status(201).json({ cart: cart })
     } catch(err) {
       console.log(err, '>>>>>>>>> error add cart');
+      next(err)
+    }
+  }
+
+  static async checkOut (req, res, next) {
+    try {
+      let UserId = req.userData.id
+      let { ProductId, quantity, status } = req.body
+      const data = await Product.findByPk(ProductId)
+      let updQty = data.quantity - quantity
+      let updStat = true
+      const updCart = Cart.update({
+        UserId, ProductId, updQty, updStat
+      }, {
+        where: { id: req.params.id }, 
+        returning: true
+      })
+      const trans = await Transaction.create({
+        CartId: req.params.id,
+        UserId,
+        updStat
+      })
+      res.status(200).json({ cart: updCart, trans: trans })
+    }
+    catch(err) {
+      console.log(err, '===create trans upd cart');
       next(err)
     }
   }
