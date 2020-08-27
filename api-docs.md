@@ -607,7 +607,7 @@ _Response (401 - Unauthorized)_
 ---
 ### DELETE /:user/cart/:id
 
-> Delete certain product
+> Delete certain item from cart
 
 _Request Header_
 ```
@@ -630,7 +630,7 @@ not needed
 _Response (200 - OK)_
 ```
 {
-    "msg": "Product deleted"
+    "msg": "Item deleted"
 }
 ```
 

@@ -6,6 +6,7 @@ class CartCtrl {
       // let UserId = req.userData.id
       let { UserId, ProductId, quantity, status } = req.body
       const data = await Cart.findAll()
+      console.log(data, '===data awal cart');
       let cart = null
       await data.forEach(e => {
         if (e.ProductId === ProductId) e.quantity++
@@ -21,8 +22,8 @@ class CartCtrl {
 
   static async checkOut (req, res, next) {
     try {
-      let UserId = req.userData.id
-      let { ProductId, quantity, status } = req.body
+      // let UserId = req.userData.id
+      let { UserId, ProductId, quantity, status } = req.body
       const data = await Product.findByPk(ProductId)
       let updQty = data.quantity - quantity
       let updStat = true
@@ -32,11 +33,11 @@ class CartCtrl {
         where: { id: req.params.id }, 
         returning: true
       })
-      const trans = await Transaction.create({
-        CartId: req.params.id,
-        UserId,
-        updStat
-      })
+      // const trans = await Transaction.create({
+      //   CartId: req.params.id,
+      //   UserId,
+      //   updStat
+      // })
       res.status(200).json({ cart: updCart, trans: trans })
     }
     catch(err) {
@@ -52,7 +53,7 @@ class CartCtrl {
           model: Product
         }],
         where: {
-          UserId: req.userData.id,
+          UserId: req.params.user,
           status: false
         }
       })
