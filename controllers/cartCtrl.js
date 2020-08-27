@@ -19,7 +19,9 @@ class CartCtrl {
           }, 
           returning: true
         })
-      }
+      } else newData = data
+      console.log(data, '===ini data');
+      console.log(newData, '===ini newdata');
       res.status(201).json({ cart: newData })
     } catch(err) {
       console.log(err, '>>>>>>>>> error add cart');
