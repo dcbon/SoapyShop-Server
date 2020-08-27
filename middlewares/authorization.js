@@ -1,4 +1,4 @@
-const { Cart, CartItem, Transaction, User } = require('../models')
+const { Cart, Transaction, User } = require('../models')
 
 async function authorizationAdm(req, res, next) {
   try {
@@ -13,7 +13,7 @@ async function authorizationAdm(req, res, next) {
 
 async function authUser(req, res, next) {
   try {
-    let id = req.userData.id
+    let id = req.params.user
     if (req.userData.id == id) next()
     else throw { msg: 'Unauthorized Access', status: 401 }
   }
@@ -29,20 +29,6 @@ async function authorizationCart(req, res, next) {
     const cart = await Cart.findByPk(id)
     if (!cart) throw { msg: 'Cart not found', status: 404 }
     else if (req.userData.id == cart.UserId) next()
-    else throw { msg: 'Unauthorized Access', status: 401 }
-  }
-  catch(err) {
-    console.log(err, '>>>>>>>> author cart');
-    next(err)
-  }
-}
-
-async function authorizationCartItem(req, res, next) {
-  try {
-    let id = req.params.id
-    const item = await CartItem.findByPk(id)
-    if (!item) throw { msg: 'item not found', status: 404 }
-    else if (req.userData.id == item.UserId) next()
     else throw { msg: 'Unauthorized Access', status: 401 }
   }
   catch(err) {
@@ -68,7 +54,6 @@ async function authorizationTrans(req, res, next) {
 module.exports = { 
   authorizationAdm, 
   authorizationCart, 
-  authorizationCartItem,
   authorizationTrans,
   authUser
 }

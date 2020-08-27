@@ -5,8 +5,8 @@ const authentication = require('../middlewares/authentication')
 const {authorizationAdm} = require('../middlewares/authorization')
 
 
-router.use(authentication)
 router.get('/', productCtrl.read)
+router.use(authentication)
 router.use(authorizationAdm)
 router.post('/', productCtrl.create)
 router.put('/:id', productCtrl.update)

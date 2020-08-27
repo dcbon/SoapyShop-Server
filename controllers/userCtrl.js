@@ -37,7 +37,7 @@ class UserCtrl {
         role: user.role
       }
       let token = generateToken(payload)
-      res.status(200).json({ access_token: token })
+      res.status(200).json({ access_token: token, id: user.id, name: user.name })
     } catch(err) {
       // console.log(err, '>>>>>>>>login user');
       next(err)

@@ -11,8 +11,8 @@ router.post('/login', userCtrl.login)
 
 router.use(authentication)
 
-router.post('/transaction', authUser, userCtrl.createTrans)
-router.get('/transaction', authUser, userCtrl.readTrans)
+router.post('/:user/transaction', authUser, userCtrl.createTrans)
+router.get('/:user/transaction', authUser, userCtrl.readTrans)
 
 router.use(authorizationAdm)
 router.get('/all-transaction', userCtrl.readTransAdm)
