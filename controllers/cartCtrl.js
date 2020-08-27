@@ -7,9 +7,9 @@ class CartCtrl {
       let { ProductId, quantity, status } = req.body
       const data = await Cart.findAll()
       let cart = null
-      data.forEach(e => {
+      await data.forEach(e => {
         if (e.ProductId === ProductId) e.quantity++
-        else cart = await Cart.create(UserId, ProductId, quantity, status)
+        else cart = Cart.create(UserId, ProductId, quantity, status)
       });
       console.log(cart, '===cart');
       res.status(201).json({ cart: cart })
