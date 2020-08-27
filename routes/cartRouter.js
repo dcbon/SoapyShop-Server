@@ -11,7 +11,7 @@ router.use(authUser)
 router.post('/', cartCtrl.create)
 router.get('/', cartCtrl.read)
 
-router.post('/:user/transaction', authorizationTrans, cartCtrl.checkOut)
+router.post('/:user/transaction', cartCtrl.checkOut)
 
 router.use(authorizationCart)
 router.put('/:id', cartCtrl.update)
