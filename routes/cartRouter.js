@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const cartCtrl = require('../controllers/cartCtrl')
 const authentication = require('../middlewares/authentication')
-const {authorizationCart, authorizationTrans, authUser} = require('../middlewares/authorization')
+const {authorizationCart, authUser} = require('../middlewares/authorization')
 
 
 router.use(authentication)
