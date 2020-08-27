@@ -412,3 +412,233 @@ _Response (401 - Unauthorized)_
     ]
 }
 ```
+
+
+---
+### POST /:user/cart
+
+> Create new cart
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbjJAbWFpbC5jb20iLCJpYXQiOjE1OTcxNTQzMDB9.IHcyAxLKx4tiI_qnWqarF_gjLDaazaXt2BHrGPxbP5I"
+}
+```
+
+_Request Params_
+```
+user=[integer]
+id=[integer]
+```
+
+
+_Request Body_
+```
+{
+  "UserId": 6",
+  "ProductId": 6,
+  "quantity": 2,
+  "status": false
+}
+```
+
+_Response (201 - Created)_
+```
+{
+    "UserId": 6,
+    "ProductId": 6,
+    "quantity": 2,
+    "status": false
+    "product": {
+        "id": 1,
+        "name": "Glasses",
+        "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
+        "price": 500000,
+        "stock": 50
+        "updatedAt": "2020-08-11T11:32:09.015Z",
+        "createdAt": "2020-08-11T11:32:09.015Z"
+    }
+}
+```
+
+_Response (400 - Bad Request)_
+```
+
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": [
+        "Unauthorized Access"
+    ]
+}
+```
+
+
+
+### GET /:user/cart
+
+> Get all cart 
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbjJAbWFpbC5jb20iLCJpYXQiOjE1OTcxNTQzMDB9.IHcyAxLKx4tiI_qnWqarF_gjLDaazaXt2BHrGPxbP5I"
+}
+```
+
+_Request Params_
+```
+user=[integer]
+id=[integer]
+```
+
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+    "carts": [
+        {
+            "UserId": 24,
+            "ProductId": 21,
+            "quantity": 5,
+            "status": false,
+            "createdAt": "2020-08-26T11:31:42.643Z",
+            "updatedAt": "2020-08-26T11:31:42.643Z",
+            "Product": {
+                "id": 21,
+                "name": "edited NorskSoapery Chamomille infused All natural vegan",
+                "image_url": "https://i.etsystatic.com/11232327/d/il/16cde3/2314399597/il_340x270.2314399597_c2zd.jpg?version=0",
+                "rating": null,
+                "description": null,
+                "price": 95000,
+                "stock": 50,
+                "CategoryId": 1,
+                "createdAt": "2020-08-23T02:01:53.533Z",
+                "updatedAt": "2020-08-23T03:00:31.709Z"
+            }
+        }
+    ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": [
+        "Unauthorized access"
+    ]
+}
+```
+
+
+
+---
+### PUT /:user/cart/:id
+
+> Updating certain cart
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbjJAbWFpbC5jb20iLCJpYXQiOjE1OTcxNTQzMDB9.IHcyAxLKx4tiI_qnWqarF_gjLDaazaXt2BHrGPxbP5I"
+}
+```
+
+_Request Params_
+```
+user=[integer]
+id=[integer]
+```
+
+_Request Body_
+```
+{
+  "name": "Glasses",
+  "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
+  "price": 500000,
+  "stock": 50
+}
+```
+
+_Response (200 - OK)_
+```
+{
+    "product": [
+        1,
+        [
+            {
+                "id": 1,
+                "name": "Glasses",
+                "image_url": "https://ca.slack-edge.com/T1UKZ9NBV-ULA08NBQT-6a07f794c443-512",
+                "price": 500000,
+                "stock": 50
+                "createdAt": "2020-08-11T11:32:09.015Z",
+                "updatedAt": "2020-08-11T11:36:52.101Z"
+            }
+        ]
+    ]
+}
+```
+
+_Response (400 - Bad Request)_
+```
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": [
+        "Unauthorized Access"
+    ]
+}
+```
+
+
+
+
+---
+### DELETE /:user/cart/:id
+
+> Delete certain product
+
+_Request Header_
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhZG1pbjJAbWFpbC5jb20iLCJpYXQiOjE1OTcxNTQzMDB9.IHcyAxLKx4tiI_qnWqarF_gjLDaazaXt2BHrGPxbP5I"
+}
+```
+
+_Request Params_
+```
+user=[cart]
+id=[integer]
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+    "msg": "Product deleted"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "msg": [
+        "Unauthorized access"
+    ]
+}
+```
