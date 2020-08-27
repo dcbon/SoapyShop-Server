@@ -10,7 +10,7 @@ router.use(authentication)
 router.post('/', cartCtrl.create)
 router.get('/', authUser, cartCtrl.read)
 
-// router.post('/:user/transaction', cartCtrl.checkOut)
+router.post('/checkout', cartCtrl.checkOut)
 
 router.use(authorizationCart)
 router.put('/:id', cartCtrl.update)
