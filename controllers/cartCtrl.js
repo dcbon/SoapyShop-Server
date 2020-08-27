@@ -68,7 +68,7 @@ class CartCtrl {
   static async update(req,res, next) {
     try {
       let UserId = req.userData.id
-      let { UserId, ProductId, quantity } = req.body
+      let { ProductId, quantity } = req.body
       const data = await Cart.update({
         quantity
       }, {
