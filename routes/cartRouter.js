@@ -13,7 +13,7 @@ router.get('/history', authUser, cartCtrl.orderHistory)
 router.get('/order-history', authorizationAdm, cartCtrl.orderHistoryAdm)
 
 router.put('/checkout', cartCtrl.checkOut)
-router.put('/', authorizationCart, cartCtrl.update)
-router.delete('/', authorizationCart, cartCtrl.delete)
+router.put('/:id', authorizationCart, cartCtrl.update)
+router.delete('/:id', authorizationCart, cartCtrl.delete)
 
 module.exports = router
