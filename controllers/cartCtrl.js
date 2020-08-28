@@ -58,7 +58,10 @@ class CartCtrl {
         where: {
           UserId: req.userData.id,
           status: false
-        }
+        },
+        attributes: [
+          'id', 'UserId', 'ProductId', 'quantity', 'subtotal'
+        ]
       })
       res.status(200).json({ carts: data })
     } catch(err) {
