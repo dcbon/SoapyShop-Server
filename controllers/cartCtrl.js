@@ -93,11 +93,11 @@ class CartCtrl {
   static async delete(req,res, next) {
     try {
       let UserId = req.userData.id
+      let id = req.params.id
       let { ProductId } = req.body
       await Cart.destroy({
         where: { 
-          UserId,
-          ProductId 
+          id
         }
       })
       res.status(200).json({ msg: 'Cart deleted' })
