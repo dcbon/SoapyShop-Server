@@ -32,14 +32,14 @@ class CartCtrl {
   static async checkOut (req, res, next) {
     try {
       let UserId = req.userData.id
-      // let { UserId, ProductId, quantity, status } = req.body
+      let { id } = req.body
       const data = await Cart.findAll({
         where: { UserId }
       })
       data.forEach(e => {
         let newStock = data.Product.stock - data.quantity
         Product.update({ stock: newStock }, { where: { id: e.ProductId }})
-        Cart.update({status: true}, {where: {status: false}})
+        Cart.update({status: true}, {where: { id }})
       });
       res.status(200).json({ cart: data })
     }
