@@ -1,4 +1,4 @@
-const { User, Transaction, Cart } = require('../models')
+const { User } = require('../models')
 const { comparePass } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 
@@ -69,51 +69,6 @@ class UserCtrl {
     }
   }
 
-
-  // transaction
-
-  static async readTrans(req,res, next) {
-    try {
-      const data = await Transaction.findAll({
-        include: {
-          model: Cart
-        },
-        where: {
-          UserId: req.userData.id
-        }
-      })
-      res.status(200).json({ transaction: data })
-    } catch(err) {
-      console.log(err, '>>>>>>>>> error read transaction');
-      next(err)
-    }
-  }
-
-  static async readTransAdm(req,res, next) {
-    try {
-      const data = await Transaction.findAll({
-        include: {
-          model: Cart
-        }
-      })
-      res.status(200).json({ transaction: data })
-    } catch(err) {
-      console.log(err, '>>>>>>>>> error read transaction adm');
-      next(err)
-    }
-  }
-  
-  static async deleteTrans(req,res, next) {
-    try {
-      await Transaction.destroy({
-        where: { id: req.params.id }
-      })
-      res.status(200).json({ msg: 'Transaction deleted' })
-    } catch(err) {
-      console.log(err, '>>>>>>>>> error delete transaction');
-      next(err)
-    }
-  }
 }
 
 module.exports = UserCtrl

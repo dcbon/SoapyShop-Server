@@ -89,8 +89,13 @@ class CartCtrl {
   
   static async delete(req,res, next) {
     try {
+      let UserId = req.userData.id
+      let { ProductId } = req.body
       await Cart.destroy({
-        where: { id: req.params.id }
+        where: { 
+          UserId,
+          ProductId 
+        }
       })
       res.status(200).json({ msg: 'Cart deleted' })
     } catch(err) {
@@ -98,6 +103,43 @@ class CartCtrl {
       next(err)
     }
   }
+
+  static async orderHistory(req,res, next) {
+    try {
+      const data = await Cart.findAll({
+        include: [{ 
+          model: Product
+        }],
+        where: {
+          UserId: req.userData.id,
+          status: true
+        }
+      })
+      res.status(200).json({ carts: data })
+    } catch(err) {
+      console.log(err, '>>>>>>>>> error read cart');
+      next(err)
+    }
+  }
+
+  static async orderHistoryAdm(req,res, next) {
+    try {
+      const data = await Cart.findAll({
+        include: [{ 
+          model: Product
+        }],
+        where: {
+          status: true
+        }
+      })
+      res.status(200).json({ carts: data })
+    } catch(err) {
+      console.log(err, '>>>>>>>>> error read cart');
+      next(err)
+    }
+  }
+
+  
 }
 
 module.exports = CartCtrl

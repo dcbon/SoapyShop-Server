@@ -31,10 +31,7 @@ async function authUser(req, res, next) {
 
 async function authorizationCart(req, res, next) {
   try {
-    let id = req.params.id
-    const cart = await Cart.findByPk(id)
-    if (!cart) throw { msg: 'Cart not found', status: 404 }
-    else if (req.userData.id == cart.UserId) next()
+    if (req.userData.id == cart.UserId) next()
     else throw { msg: 'Unauthorized Access', status: 401 }
   }
   catch(err) {
@@ -43,23 +40,8 @@ async function authorizationCart(req, res, next) {
   }
 }
 
-async function authorizationTrans(req, res, next) {
-  try {
-    let id = req.params.id
-    const trans = await Transaction.findByPk(id)
-    if (!trans) throw { msg: 'trans not found', status: 404 }
-    else if (req.userData.id == trans.UserId) next()
-    else throw { msg: 'Unauthorized Access', status: 401 }
-  }
-  catch(err) {
-    console.log(err, '>>>>>>>> author trans');
-    next(err)
-  }
-}
-
 module.exports = { 
   authorizationAdm, 
   authorizationCart, 
-  authorizationTrans,
   authUser
 }
