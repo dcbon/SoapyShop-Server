@@ -60,7 +60,7 @@ class CartCtrl {
           status: false
         },
         attributes: [
-          'id', 'UserId', 'ProductId', 'quantity', 'subtotal'
+          'id', 'UserId', 'ProductId', 'quantity', 'subtotal', 'status'
         ]
       })
       res.status(200).json({ carts: data })
