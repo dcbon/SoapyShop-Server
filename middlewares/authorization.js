@@ -32,7 +32,11 @@ async function authUser(req, res, next) {
 async function authorizationCart(req, res, next) {
   try {
     let id = req.params.id
-    const cart = await Cart.findByPk(id)
+    const cart = await Cart.findOne({
+      where: {
+        id
+      }
+    })
     if (!cart) throw { msg: 'Cart not found', status: 404 }
     else if (req.userData.id == cart.UserId) next()
     else throw { msg: 'Unauthorized Access', status: 401 }
