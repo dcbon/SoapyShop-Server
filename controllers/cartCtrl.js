@@ -74,8 +74,10 @@ class CartCtrl {
     try {
       let UserId = req.userData.id
       let { ProductId, quantity } = req.body
+      let product = await Product.findByPk(ProductId)
+      let subtotal = quantity * product.price
       const data = await Cart.update({
-        quantity
+        quantity, subtotal
       }, {
         where: { 
           UserId,
