@@ -29,19 +29,7 @@ async function authUser(req, res, next) {
   }
 }
 
-async function authorizationCart(req, res, next) {
-  try {
-    if (req.userData.id == cart.UserId) next()
-    else throw { msg: 'Unauthorized Access', status: 401 }
-  }
-  catch(err) {
-    console.log(err, '>>>>>>>> author cart');
-    next(err)
-  }
-}
-
 module.exports = { 
   authorizationAdm, 
-  authorizationCart, 
   authUser
 }
